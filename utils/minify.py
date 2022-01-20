@@ -1,7 +1,7 @@
 import os
 from os import path
 import numpy as np
-DATA_DIR = '../Dataset/'
+DATA_DIR = '../Dataset/test/'
 def minify(model, factors=[], resolutions=[]):
     basedir = DATA_DIR
     needtoload = False
