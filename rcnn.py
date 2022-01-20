@@ -28,8 +28,8 @@ def get_iou(bb1, bb2):
 
 train_images=[]
 train_labels=[]
-annot = "/content/SC_dataset/Dataset/annotation/"
-path = "/content/SC_dataset/Dataset/rename/"
+annot = "SC_dataset/Dataset/annotation/"
+path = "SC_dataset/Dataset/rename/"
 for e,i in enumerate(os.listdir(annot)):
     try:
         if i.startswith("0"):
