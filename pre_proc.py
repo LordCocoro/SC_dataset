@@ -54,26 +54,26 @@ with open("annotation.txt", "w+") as f:
 train_path = 'Dataset/train'
 test_path = 'Dataset/test'
 classes=['gas','mineral','protobase','zergbase','terranbase']
-# random.seed(1)
+random.seed(1)
 
-# for i in range(len(classes)):
-#     all_imgs = gtvalues[i]
-#     all_imgs = [f for f in all_imgs if not f.startswith('.')]
-#     random.shuffle(all_imgs)
+for i in range(len(classes)):
+    all_imgs = gtvalues[i]
+    all_imgs = [f for f in all_imgs if not f.startswith('.')]
+    random.shuffle(all_imgs)
     
-#     limit = int(len(gtvalues[i])*0.8)
+    limit = int(len(gtvalues[i])*0.8)
 
-#     train_imgs = all_imgs[:limit]
-#     test_imgs = all_imgs[limit:]
+    train_imgs = all_imgs[:limit]
+    test_imgs = all_imgs[limit:]
     
-#     # copy each classes' images to train directory
-#     for j in range(len(train_imgs)):
-#         original_path = os.path.join(path, train_imgs[j])
-#         new_path = os.path.join(train_path, train_imgs[j])
-#         copyfile(original_path, new_path)
+    # copy each classes' images to train directory
+    for j in range(len(train_imgs)):
+        original_path = os.path.join(path, train_imgs[j])
+        new_path = os.path.join(train_path, train_imgs[j])
+        copyfile(original_path, new_path)
     
-#     # copy each classes' images to test directory
-#     for j in range(len(test_imgs)):
-#         original_path = os.path.join(path, test_imgs[j])
-#         new_path = os.path.join(test_path, test_imgs[j])
-#         copyfile(original_path, new_path)
+    # copy each classes' images to test directory
+    for j in range(len(test_imgs)):
+        original_path = os.path.join(path, test_imgs[j])
+        new_path = os.path.join(test_path, test_imgs[j])
+        copyfile(original_path, new_path)

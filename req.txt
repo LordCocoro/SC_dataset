@@ -5,3 +5,5 @@ image-classifiers==1.0.0
 efficientnet==1.0.0
 opencv-python
 sklearn
+matplotlib
+pandas
