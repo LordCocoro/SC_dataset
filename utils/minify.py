@@ -1,12 +1,12 @@
 import os
 from os import path
 import numpy as np
-DATA_DIR = '../Dataset/test/'
+DATA_DIR = 'Dataset/'
 def minify(model, factors=[], resolutions=[]):
     basedir = DATA_DIR
     needtoload = False
     for r in factors:
-        imgdir = os.path.join(basedir, 'images_{}'.format(r))
+        imgdir = os.path.join(basedir, 'images_{}_v2'.format(r))
         if not os.path.exists(imgdir):
             needtoload = True
     for r in resolutions:
@@ -14,18 +14,20 @@ def minify(model, factors=[], resolutions=[]):
         if not os.path.exists(imgdir):
             needtoload = True
     if not needtoload:
+        print('Hola')
         return
     
     from shutil import copy
     from subprocess import check_output
     
-    imgdir = os.path.join(basedir, 'images/')
+    imgdir = os.path.join(basedir, 'images_v2/')
     imgs = [os.path.join(imgdir, f) for f in sorted(os.listdir(imgdir))]
     imgs = [f for f in imgs if any([f.endswith(ex) for ex in ['JPG', 'jpg', 'png', 'jpeg', 'PNG']])]
     imgdir_orig = imgdir
     
     wd = os.getcwd()
     resizearg = 0
+    print('Hola')
     for r in factors + resolutions:
         if isinstance(r, int):
             name = 'images_{}'.format(r)
@@ -33,7 +35,7 @@ def minify(model, factors=[], resolutions=[]):
         else:
             name = 'images_{}x{}'.format(r[1], r[0])
             resizearg = '{}x{}'.format(r[1], r[0])
-        imgdir = os.path.join(basedir, name)
+        imgdir = os.path.join(basedir, name+'_v2')
         if os.path.exists(imgdir):
             continue
             
