@@ -61,6 +61,7 @@ for i in range(len(ss_arr)):
                     y_min = _y
                     x_max = _x + _w
                     y_max = _y + _h
+                    print(i,ss_labels[i])
                     if(p.attrib['class']==ss_labels[i]):
                         #print(x_min,x_max,y_min,y_max)
                         gtvalues.append({"x1":x_min,"x2":x_max,"y1":y_min,"y2":y_max})
