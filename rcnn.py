@@ -36,72 +36,72 @@ for i in range(len(ss_arr)):
     annot = "SC_dataset/Dataset/annotation/"
     path = "SC_dataset/Dataset/rename/"
     for e,i in enumerate(os.listdir(annot)):
-        try:
-            if i.startswith("0"):
-                filename = i.split(".")[0]+".png"
-                #print(e,filename)
-                image = cv2.imread(os.path.join(path,filename))
-                tree = ET.parse(annot+i)
-                root = tree.getroot()
-                
-                gtvalues=[]
-                for p in root[2]:
-                    setPx = lambda px: px*3.7795275591
-                    if(p.attrib['id'].startswith('imag')):
-                        x_loss = float(p.attrib['x'])
-                        y_loss = float(p.attrib['y'])
-                    getx = lambda x: (x-x_loss) * 3.7795275591/32
-                    gety = lambda y: (y-y_loss) * 3.7795275591/24
-                    if(p.attrib['id'].startswith('rec')):
-                        _x=getx(float(p.attrib['x']))
-                        _y=gety(float(p.attrib['y']))
-                        _w=setPx(float(p.attrib['width']))/32
-                        _h=setPx(float(p.attrib['height']))/24
-                        x_min = _x
-                        y_min = _y
-                        x_max = _x + _w
-                        y_max = _y + _h
-                        if(p.attrib['class'].startswith(ss_labels[i])):
-                            #print(x_min,x_max,y_min,y_max)
-                            gtvalues.append({"x1":x_min,"x2":x_max,"y1":y_min,"y2":y_max})
-                #print(len(gtvalues))
-                if(len(gtvalues)>0):
-                    print(e,filename)
-                    ss_arr[i].setBaseImage(image)
-                    ss_arr[i].switchToSelectiveSearchFast()
-                    ssresults = ss_arr[i].process()
-                    imout = image.copy()
-                    counter = 0
-                    falsecounter = 0
-                    flag = 0
-                    fflag = 0
-                    bflag = 0
-                    for e,result in enumerate(ssresults):
-                        if e < 2000 and flag == 0:
-                            for gtval in gtvalues:
-                                x,y,w,h = result
-                                iou = get_iou(gtval,{"x1":x,"x2":x+w,"y1":y,"y2":y+h})
-                                if counter < 30:
-                                    if iou > 0.70:
-                                        timage = imout[y:y+h,x:x+w]
-                                        resized = cv2.resize(timage, (224,224), interpolation = cv2.INTER_AREA)
-                                        train_images.append(resized)
-                                        train_labels.append(1)
-                                        counter += 1
-                                else :
-                                    fflag =1
-                                if falsecounter <30:
-                                    if iou < 0.3:
-                                        timage = imout[y:y+h,x:x+w]
-                                        resized = cv2.resize(timage, (224,224), interpolation = cv2.INTER_AREA)
-                                        train_images.append(resized)
-                                        train_labels.append(0)
-                                        falsecounter += 1
-                                else :
-                                    bflag = 1
-                            if fflag == 1 and bflag == 1:
-                                print("inside")
-                                flag = 1
+        #try:
+        if i.startswith("0"):
+            filename = i.split(".")[0]+".png"
+            #print(e,filename)
+            image = cv2.imread(os.path.join(path,filename))
+            tree = ET.parse(annot+i)
+            root = tree.getroot()
+            
+            gtvalues=[]
+            for p in root[2]:
+                setPx = lambda px: px*3.7795275591
+                if(p.attrib['id'].startswith('imag')):
+                    x_loss = float(p.attrib['x'])
+                    y_loss = float(p.attrib['y'])
+                getx = lambda x: (x-x_loss) * 3.7795275591/32
+                gety = lambda y: (y-y_loss) * 3.7795275591/24
+                if(p.attrib['id'].startswith('rec')):
+                    _x=getx(float(p.attrib['x']))
+                    _y=gety(float(p.attrib['y']))
+                    _w=setPx(float(p.attrib['width']))/32
+                    _h=setPx(float(p.attrib['height']))/24
+                    x_min = _x
+                    y_min = _y
+                    x_max = _x + _w
+                    y_max = _y + _h
+                    if(p.attrib['class'].startswith(ss_labels[i])):
+                        #print(x_min,x_max,y_min,y_max)
+                        gtvalues.append({"x1":x_min,"x2":x_max,"y1":y_min,"y2":y_max})
+            #print(len(gtvalues))
+            if(len(gtvalues)>0):
+                print(e,filename)
+                ss_arr[i].setBaseImage(image)
+                ss_arr[i].switchToSelectiveSearchFast()
+                ssresults = ss_arr[i].process()
+                imout = image.copy()
+                counter = 0
+                falsecounter = 0
+                flag = 0
+                fflag = 0
+                bflag = 0
+                for e,result in enumerate(ssresults):
+                    if e < 2000 and flag == 0:
+                        for gtval in gtvalues:
+                            x,y,w,h = result
+                            iou = get_iou(gtval,{"x1":x,"x2":x+w,"y1":y,"y2":y+h})
+                            if counter < 30:
+                                if iou > 0.70:
+                                    timage = imout[y:y+h,x:x+w]
+                                    resized = cv2.resize(timage, (224,224), interpolation = cv2.INTER_AREA)
+                                    train_images.append(resized)
+                                    train_labels.append(1)
+                                    counter += 1
+                            else :
+                                fflag =1
+                            if falsecounter <30:
+                                if iou < 0.3:
+                                    timage = imout[y:y+h,x:x+w]
+                                    resized = cv2.resize(timage, (224,224), interpolation = cv2.INTER_AREA)
+                                    train_images.append(resized)
+                                    train_labels.append(0)
+                                    falsecounter += 1
+                            else :
+                                bflag = 1
+                        if fflag == 1 and bflag == 1:
+                            print("inside")
+                            flag = 1
                 #train_images,train_labels = get_train_values(ss_gas,gtvalues,image) 
                     # if(p.attrib['class'].startswith('proto')):
                     #     rect = patches.Rectangle((_x,_y),_w,_h, linewidth=1, edgecolor='r', facecolor='none')
@@ -115,9 +115,9 @@ for i in range(len(ss_arr)):
                     #     rect = patches.Rectangle((_x,_y),_w,_h, linewidth=1, edgecolor='b', facecolor='none')
                 #train_images,train_labels = get_train_values(ss_gas,gtvalues)
                             
-        except Exception as e:
-            print(e)
-            print("error in "+filename)
+        #except Exception as e:
+        #    print(e)
+        #    print("error in "+filename)
             continue
     X_new = np.array(train_images)
     y_new = np.array(train_labels)
