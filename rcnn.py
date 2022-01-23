@@ -30,7 +30,7 @@ def get_iou(bb1, bb2):
     assert iou >= 0.0
     assert iou <= 1.0
     return iou
-for i in range(len(ss_arr)):
+for g in range(len(ss_arr)):
     train_images=[]
     train_labels=[]
     annot = "SC_dataset/Dataset/annotation/"
@@ -61,16 +61,16 @@ for i in range(len(ss_arr)):
                     y_min = _y
                     x_max = _x + _w
                     y_max = _y + _h
-                    print(i)
-                    if(p.attrib['class']==ss_labels[i]):
+                    print(g)
+                    if(p.attrib['class']==ss_labels[g]):
                         #print(x_min,x_max,y_min,y_max)
                         gtvalues.append({"x1":x_min,"x2":x_max,"y1":y_min,"y2":y_max})
             #print(len(gtvalues))
             if(len(gtvalues)>0):
                 print(e,filename)
-                ss_arr[i].setBaseImage(image)
-                ss_arr[i].switchToSelectiveSearchFast()
-                ssresults = ss_arr[i].process()
+                ss_arr[g].setBaseImage(image)
+                ss_arr[g].switchToSelectiveSearchFast()
+                ssresults = ss_arr[g].process()
                 imout = image.copy()
                 counter = 0
                 falsecounter = 0
