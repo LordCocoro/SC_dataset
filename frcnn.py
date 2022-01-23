@@ -5,5 +5,5 @@ import matplotlib.pyplot as plt
 from matplotlib import patches
 
 # read the csv file using read_csv function of pandas
-train = pd.read_csv(‘train.csv’)
+train = pd.read_csv('train.csv')
 train.head()
