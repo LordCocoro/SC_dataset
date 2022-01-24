@@ -31,6 +31,7 @@ def get_iou(bb1, bb2):
     assert iou <= 1.0
     return iou
 for g in range(len(ss_arr)):
+    print(ss_arr[g])
     train_images=[]
     train_labels=[]
     annot = "SC_dataset/Dataset/annotation/"
