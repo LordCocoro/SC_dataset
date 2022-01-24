@@ -5,12 +5,7 @@ import numpy as np
 import tensorflow as tf
 import xml.etree.ElementTree as ET
 
-ss_gas = cv2.ximgproc.segmentation.createSelectiveSearchSegmentation()
-ss_mineral = cv2.ximgproc.segmentation.createSelectiveSearchSegmentation()
-ss_protos = cv2.ximgproc.segmentation.createSelectiveSearchSegmentation()
-ss_terran = cv2.ximgproc.segmentation.createSelectiveSearchSegmentation()
-ss_zerg = cv2.ximgproc.segmentation.createSelectiveSearchSegmentation()
-ss_arr = [ss_protos,ss_terran,ss_zerg]
+ss = cv2.ximgproc.segmentation.createSelectiveSearchSegmentation()
 ss_labels = ['protobase','terranbase','zergbase']
 def get_iou(bb1, bb2):
     assert bb1['x1'] < bb1['x2']
@@ -30,7 +25,7 @@ def get_iou(bb1, bb2):
     assert iou >= 0.0
     assert iou <= 1.0
     return iou
-for g in range(len(ss_arr)):
+for g in range(len(ss_labels)):
     train_images=[]
     train_labels=[]
     annot = "SC_dataset/Dataset/annotation/"
@@ -67,9 +62,9 @@ for g in range(len(ss_arr)):
                 #print(len(gtvalues))
                 if(len(gtvalues)>0):
                     print(e,filename)
-                    ss_arr[g].setBaseImage(image)
-                    ss_arr[g].switchToSelectiveSearchFast()
-                    ssresults = ss_arr[g].process()
+                    ss.setBaseImage(image)
+                    ss.switchToSelectiveSearchFast()
+                    ssresults = ss.process()
                     imout = image.copy()
                     counter = 0
                     falsecounter = 0
