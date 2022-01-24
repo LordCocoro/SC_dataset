@@ -114,6 +114,7 @@ for g in range(len(ss_labels)):
             print(e)
             print("error in "+filename)
             continue
+
     X_new = np.array(train_images)
     y_new = np.array(train_labels)
     print(ss_labels[g])
