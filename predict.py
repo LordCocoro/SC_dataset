@@ -144,12 +144,12 @@ model_final.summary()
 model_final.load_weights('/home/lordcocoro2004/maestria/SC_dataset/SC_dataset/ieeercnn_vgg16_1gas.h5')
 
 z=0
-for e,i in enumerate(os.listdir("/content/test")):
+for e,i in enumerate(os.listdir("Dataset/test")):
     print(i)
     if i.startswith("004"):
         print(i)
         z += 1
-        img = cv2.imread(os.path.join("/content/test",i))
+        img = cv2.imread(os.path.join("Dataset/test",i))
         ss_gas.setBaseImage(img)
         ss_gas.switchToSelectiveSearchFast()
         ssresults = ss_gas.process()
