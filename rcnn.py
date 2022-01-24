@@ -116,7 +116,7 @@ for g in range(len(ss_labels)):
             continue
     X_new = np.array(train_images)
     y_new = np.array(train_labels)
-
+    print(ss_labels[g])
     from keras.layers import Dense
     from keras import Model
     from keras import optimizers
@@ -160,6 +160,7 @@ for g in range(len(ss_labels)):
     testdata = tsdata.flow(x=X_test, y=y_test)
 
     from keras.callbacks import ModelCheckpoint, EarlyStopping
+    
     checkpoint = ModelCheckpoint("ieeercnn_vgg16_1"+ss_labels[g]+".h5", monitor='val_loss', verbose=1, save_best_only=True, save_weights_only=False, mode='auto', period=1)
     early = EarlyStopping(monitor='val_loss', min_delta=0, patience=100, verbose=1, mode='auto')
     hist = model_final.fit_generator(generator= traindata, steps_per_epoch= 10, epochs= 100, validation_data= testdata, validation_steps=2, callbacks=[checkpoint,early])
