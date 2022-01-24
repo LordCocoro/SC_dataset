@@ -10,8 +10,8 @@ ss_mineral = cv2.ximgproc.segmentation.createSelectiveSearchSegmentation()
 ss_protos = cv2.ximgproc.segmentation.createSelectiveSearchSegmentation()
 ss_terran = cv2.ximgproc.segmentation.createSelectiveSearchSegmentation()
 ss_zerg = cv2.ximgproc.segmentation.createSelectiveSearchSegmentation()
-ss_arr = [ss_gas,ss_mineral,ss_protos,ss_terran,ss_zerg]
-ss_labels = ['gas','mineral','protobase','terranbase','zergbase']
+ss_arr = [ss_protos,ss_terran,ss_zerg]
+ss_labels = ['protobase','terranbase','zergbase']
 def get_iou(bb1, bb2):
     assert bb1['x1'] < bb1['x2']
     assert bb1['y1'] < bb1['y2']
