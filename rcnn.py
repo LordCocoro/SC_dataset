@@ -6,7 +6,7 @@ import tensorflow as tf
 import xml.etree.ElementTree as ET
 
 ss = cv2.ximgproc.segmentation.createSelectiveSearchSegmentation()
-ss_labels = ['protobase','terranbase','zergbase']
+ss_labels = ['protobase','terranbase','zergbase','gas','mineral']
 def get_iou(bb1, bb2):
     assert bb1['x1'] < bb1['x2']
     assert bb1['y1'] < bb1['y2']
